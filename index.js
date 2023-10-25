@@ -50,6 +50,18 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/mycart", async (req, res) => {
+      const newProduct = req.body;
+      const result = await mycartCollection.insertOne(newProduct);
+      res.send(result);
+    });
+    
+app.get("/mycart", async (req, res) => {
+      const cursor = mycartCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
 
     // Ping the MongoDB deployment to check the connection
     // await client.db("admin").command({ ping: 1 });
