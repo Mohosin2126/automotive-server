@@ -37,6 +37,11 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    app.get("/allBrands", async (req, res) => {
+      const cursor = allBrandsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
 
 
