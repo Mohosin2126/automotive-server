@@ -43,6 +43,12 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/addProduct", async (req, res) => {
+      const newProduct = req.body;
+      console.log(newProduct);
+      const result = await brandUpdateCollection.insertOne(newProduct);
+      res.send(result);
+    });
 
 
     // Ping the MongoDB deployment to check the connection
