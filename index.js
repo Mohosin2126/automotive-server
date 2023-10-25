@@ -37,6 +37,7 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
     app.get("/allBrands", async (req, res) => {
       const cursor = allBrandsCollection.find();
       const result = await cursor.toArray();
@@ -56,19 +57,57 @@ async function run() {
       res.send(result);
     });
 
-app.get("/mycart", async (req, res) => {
+    app.get("/mycart", async (req, res) => {
       const cursor = mycartCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
 
-app.delete('/mycart/:id', async (req, res) => {
+    app.delete('/mycart/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }
       const result = await mycartCollection.deleteOne(query);
       res.send(result);
     });
-    
+
+    app.get("/mycart", async (req, res) => {
+      const cursor = mycartCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+
+    app.get("/allBrands/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await allBrandsCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.put('/allBrands/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) }
+      const options = { upsert: true };
+      const updatedBrand = req.body;
+
+      const brand = {
+          $set: {
+              name: updatedBrand.name,
+              price: updatedBrand.price,
+              type: updatedBrand.type,
+              rating: updatedBrand.rating,
+              image: updatedBrand.image,
+              brandName: updatedBrand.brandName,
+              
+          }
+      }
+
+      const result = await allBrandsCollection.updateOne(filter, brand, options);
+      res.send(result);
+  })
+
+
+
     // Ping the MongoDB deployment to check the connection
     // await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
