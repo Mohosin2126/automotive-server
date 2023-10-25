@@ -32,7 +32,11 @@ async function run() {
     const brandUpdateCollection = client.db("Brand").collection("UpDateCollection");
     const mycartCollection = client.db("Brand").collection("mycart");
 
-   
+    app.get("/brands", async (req, res) => {
+      const cursor = brandsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
 
 
