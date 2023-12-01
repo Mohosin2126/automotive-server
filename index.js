@@ -3,15 +3,13 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
-const port = process.env.PORT || 5000 ;
+const port = process.env.PORT || 5001;
 
 // middleware
 app.use(cors());
 app.use(express.json());
 
-
 const uri = `mongodb+srv://${process.env.DB_USER_AUTO_MOTIVE_ASSIGNMENT101023}:${process.env.DB_USER_PASS_AUTO_MOTIVE_ASSIGNMENT101023}@cluster0.crat2tn.mongodb.net/?retryWrites=true&w=majority`;
-
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -23,7 +21,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-  
+
     // await client.connect();
 
 
@@ -91,20 +89,20 @@ async function run() {
       const updatedBrand = req.body;
 
       const brand = {
-          $set: {
-              name: updatedBrand.name,
-              price: updatedBrand.price,
-              type: updatedBrand.type,
-              rating: updatedBrand.rating,
-              image: updatedBrand.image,
-              brandName: updatedBrand.brandName,
-              
-          }
+        $set: {
+          name: updatedBrand.name,
+          price: updatedBrand.price,
+          type: updatedBrand.type,
+          rating: updatedBrand.rating,
+          image: updatedBrand.image,
+          brandName: updatedBrand.brandName,
+
+        }
       }
 
       const result = await allBrandsCollection.updateOne(filter, brand, options);
       res.send(result);
-  })
+    })
 
 
 
@@ -117,12 +115,12 @@ async function run() {
   }
 }
 
-run().catch(console.dir); 
+run().catch(console.dir);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
- 
+
 app.listen(port, () => {
   console.log(`automotive server is running on port ${port}`);
 });
